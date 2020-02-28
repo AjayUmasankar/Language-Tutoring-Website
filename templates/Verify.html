@@ -1,0 +1,123 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="findTutorBG">
+  <div class="searchVerifyBG"></div>
+  <div class="col-md-5 p-lg-5 mx-auto my-5 fontImageFront">
+    <h1 class="display-4 font-weight-normal">Verification</h1>
+    <p class="lead font-weight-normal">Verify tutor's qualification and test result here.</p>
+  </div>
+  <div class="searchBar">
+    <div class="searchBarContainer">
+      <div class="allBars">
+        <div class="searchContainer">
+          <i class="fa fa-address-card searchIcon"></i>
+          <input type="text" class="searchBarInner" id="searchName" onkeyup="searchName()" placeholder="Search by Name" style="border-right: 1px solid #80808042;">
+        </div>
+        <div class="searchContainer">
+          <i class="fa fa-language searchIcon"></i>
+          <input type="text" class="searchBarInner" id="searchLanguage" onkeyup="searchLanguage()" placeholder="Search by Language" style="border-right: 1px solid #80808042;">
+        </div>
+        <div class="searchContainer">
+          <i class="fa fa-info searchIcon"></i>
+          <input type="text" class="searchBarInner" id="searchApprove" onkeyup="searchApprove()" placeholder="Search by status">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="srBG">
+    <div class="searchResult">
+      <table id='table' style="width: 81%; margin-left: 10rem;">
+        <tr class='header'>
+          <th>Tutor ID</th>
+          <th>Tutor's Name</th>
+          <th>Language</th>
+          <th>Verification Status</th>
+        </tr>
+        {% if info == [] %}
+        <tr class="header">There are currently no accounts to verify.</tr>
+        {% else %}
+          {% for i in info %}
+          {% set tutor = info[loop.index - 1] %}
+          {% set moreinfo = tutorinfo[loop.index - 1] %}
+          <tr>
+              <td><a href="{{ url_for('view_verify', id=tutor.id) }}">Verification#{{ tutor.id }}</a></td>
+              <td>{{ tutor.username }}</td>
+              <td>{{ moreinfo.languagetoteach }}</td>
+              <td>{{ moreinfo.approved }}</td>
+              <td>
+                  <a class="btn btn-outline-primary" href="{{ url_for('view_verify', id=tutor.id) }}">View Verification Files</a>
+              </td>
+          </tr>
+          {% endfor %}
+        {% endif %}
+      </table>
+    </div>     
+  </div>
+</div>
+
+{% endblock content %}
+
+{% block script %}
+<script>
+  // https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_filter_table
+  function searchApprove() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("searchApprove");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("table");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[3];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+
+  function searchLanguage() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("searchLanguage");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("table");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[2];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+
+  function searchName() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("searchName");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("table");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[1];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+</script>
+{% endblock script %}

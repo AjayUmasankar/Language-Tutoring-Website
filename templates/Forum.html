@@ -1,0 +1,147 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="findTutorBG">
+  <div class="searchForumBG"></div>
+  <div class="col-md-5 p-lg-5 mx-auto my-5 fontImageFront">
+    <h1 class="display-4 font-weight-normal">Forum</h1>
+    <p class="lead font-weight-normal">Ask questions here.</p>
+    <a class="btn" style="text-shadow: none;" href="{{ url_for('create_post')}}">New Post</a>
+  </div>
+
+  <div class="searchBar2">
+    <div class="searchBarContainer">
+      <div class="allBars">
+        <div class="searchContainer">
+          <i class="fa fa-address-card searchIcon"></i>
+          <input type="text" class="searchBarInner" id="searchAuthor" onkeyup="searchAuthor()" placeholder="Search by Author's Name" style="border-right: 1px solid #80808042;">
+        </div>
+        <div class="searchContainer">
+          <i class="fa fa-tag searchIcon"></i>
+          <input type="text" class="searchBarInner" id="searchLabel" onkeyup="searchLabel()" placeholder="Search by Label">
+        </div>
+      </div>
+    </div>
+  </div>
+
+ <div class="srBG">
+    <div class="searchResult">
+      {% if posts == [] %}
+      <p>There are currently no posts. Would you like to create a post?</p>
+      {% else %}
+
+      <div class="resultContianer">
+        {% for i in posts %}
+        {% set post = posts[loop.index - 1] %}
+        <div class="singlePost" id="{{ loop.index }}">
+          <div class="postContianer">
+            <div class="Author">
+              <div class="NameAndTime">
+                <span class="AuthorName" >
+                  <span id="AuthorName">{{ post.author.name }}</span>
+                  <a class="fa fa-id-card-o moreBtn" aria-hidden="true" href="{{ url_for('user', username=post.author.username) }}"></a>
+                </span>
+                <span class="time">
+                 {{ post.post_date }}
+                </span>
+              </div>
+            </div>
+            <div class="postContent">
+              <div class="postTitle">
+                <h2>{{ post.title }}</h2>
+              </div>
+              <div class="contentDetail">
+               {{ post.content }}
+              </div>
+            </div>
+            <div class="postBottom">
+              <div class="gap"></div>
+              <div class="bottomText">
+                <a class="fa fa-tag"></a>
+                <span id="label">{{ post.label }}</span> 
+                <span class="viewContianer">
+                  <a class="fa fa-search moreBtn" aria-hidden="true" href="{{ url_for('view_post', id=post.id) }}}}"></a>      
+                  <span> view more</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        
+      </div>
+       {% endif %}
+
+    </div>
+  </div>
+</div>
+
+
+{% endblock content %}
+
+{% block script %}
+<script>
+  function searchAuthor() {
+    var input,i,singlePost,name;
+    input = document.getElementById("searchAuthor").value;
+    allPost = document.getElementsByClassName("singlePost");
+
+    for (i = 1; i < allPost.length + 1; i++) {
+      singlePost = document.getElementById(i);
+      allChild = singlePost.childNodes;
+      contentChild = allChild[1].childNodes;
+      authorChild = contentChild[1].childNodes;
+      NameAndTimeChild = authorChild[1].childNodes;
+      nameChild = NameAndTimeChild[1].childNodes;
+      finalName = nameChild[1].innerText;
+      console.log(finalName);
+      if (finalName != input){
+        singlePost.style.display = "none";
+      } else {
+        singlePost.style.display = "inline-block";
+      }
+    }
+
+    if (!input){
+      for (i = 1; i < allPost.length + 1; i++) {
+        singlePost = document.getElementById(i);
+        singlePost.style.display = "inline-block";
+      }
+    }
+
+  }
+
+  function searchLabel() {
+    var input,i,singlePost,name;
+    input = document.getElementById("searchLabel").value;
+    allPost = document.getElementsByClassName("singlePost");
+
+    for (i = 1; i < allPost.length + 1; i++) {
+      singlePost = document.getElementById(i);
+      allChild = singlePost.childNodes;
+      contentChild = allChild[1].childNodes;
+      buttomChild = contentChild[5].childNodes;
+      textChild = buttomChild[3].childNodes;
+      labelName = textChild[3].innerText;
+      
+      if (labelName != input){
+        singlePost.style.display = "none";
+      } else {
+        singlePost.style.display = "inline-block";
+      }
+      
+    }
+
+    if (!input){
+      for (i = 1; i < allPost.length + 1; i++) {
+        singlePost = document.getElementById(i);
+        singlePost.style.display = "inline-block";
+      }
+    }
+
+  }
+
+
+</script>
+{% endblock script %}

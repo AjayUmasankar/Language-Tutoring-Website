@@ -1,0 +1,63 @@
+Lecture 2 : Theoretical Underpinnings of Ethics by Stephen Cohen
+Ethical thinking
+Ethical thinking is the recognition that there are “better” or more positive interests than your own. It also suggests that you should act on those interests rather than your own. With ethics, there will always be a “winner” and a “loser” and it is by ethical reasoning that we choose the “winner” by answering the question “What should I do?”. This may be different from what you actually do in the end.
+ 
+Why is moral reasoning so difficult?
+To simplify, moral reasoning is the “battle” between rules and consequences. However, it is not that simple. There are individual morality and role morality. Individual morality is the morals that the individual has. It consists of the rules and consequences, as well as the individual’s virtue. Role morality is the morals that the person has to uphold based on their particular role or job. For example, a lawyer cannot reveal confidential information provided by his client as it is his role to have confidentiality. Since the "simplified" moral reasoning (rules and consequences) is already hard to come to a conclusion, by adding the role morality and virtues makes moral reasoning even harder.
+ 
+Immanuel Kant
+Kant was a person who believed that right and wrong should be independent of the consequences of an action. He believed that if an action is second nature to someone, even though it was the right decision, it is not of moral worth. Kant believed that this was second nature: that it was in his character. To Kant, he would have categorised that as luck and not ethics. He believed that morality is not when you get lucky or when you accidentally did the right thing. If a person does the right thing after deciding whether or not to do it, Kant believes that this has moral worth as it falls under will and not luck nor accident. 
+ 
+John Stuart Mill
+Mill could be said to be the polar opposite of Kant. Mill was a firm believer in the Utilitarian principle. The Utilitarian principle is based on the consequences of an action. It says that the best action morally, is one that creates the most happiness overall. For example, giving a person $200 will "produce" more happiness than giving 200 people $1. Thus, based on the Utilitarian principle, one would give someone $200. The Utilitarian principle also describes happiness to be pleasure and without pain, while unhappiness is pain and the lack of pleasure.
+ 
+W. D. Ross
+Ross could be described as the middle man between Kant and Mill. Ross, like Mill, believes in the Utilitarian principle but wrote his “commands” (prima facie duties) as rules that needed to be followed. The prima facie duties are the 6 duties or “commands” that people ought to do. Ross’s belief led to the term "moral pluralism", that is, there are multiple and different moral theory or principles that should be acceptable and not one single principle or a set of principle is “better” than another.
+
+Lecture 3 : Legal Perspectives on the Software Industry in a Surveillance Economy by David Vaile
+What shapes ‘the law’
+‘The law’ was not given to society, it was fought for by different interest groups and campaigns. It is very different from the sciences, where many things are either black or white. Many policy debates uses specific words to sway people’s opinion. For example, the word ‘open’ provides a notion of spaciousness while in reality, it could be used for exposing confidential data. Every law is arguable and there is no ‘right’ answer. The ‘winner’ is the entity that provides the best argument.
+ 
+‘Rule of Law’
+The ‘Rule of Law’ states that no one is above the law: that everyone is equal before the law, regardless of their status in society. It prevents individuals and groups of people, who are  in position of leadership, from having arbitrary power. For example, Trump, the president of the United States, would still have to obey the laws in America while making decisions for America. The law takes into consideration different arguments and interests and thus, people are free to congregate and voice their opinions about the law. If they have enough voices, they can request for the legislation to be changed.
+ 
+‘Natural Justice’
+To put it simply, natural justice is fairness. You have a right to know of any charges made against you: the evidence supporting the charges and logic of the case.You are also given opportunities to defend yourself before a decision is made. The decision cannot be bias and it should be made only based on the evidence provided and the law. 
+ 
+Risk as a factor of design
+Risk management and risk assessment are two divisions that asks the questions “What could go wrong?” and “How can we mitigate those risks?”. This is crucial as even though failures in software code are used to make the software more reliable, some failures may not be detected until it is too late. Fixes to a software can be made easily with a push of a new version. However, when the software is deployed to the public, finding the failure after deployment could be detrimental. The product could have brought harm to society and recalling the product then might be too late.
+ 
+Why should I care?
+We, as the next generation, should care more about what data is being shared and who it is being shared to. Since the internet is growing day by day, we need to be weary of what is out there and to educate the next generation. Since there are ways to bypass firewalls, all information stored in the digital world can be accessed. We could potentially be blackmailed using our own personal information, that has not been shared with anyone else, but is on our own computer. Similar to the panopticon or chilling effect, we should act as if someone is watching us while using our electronic devices. We should not share, upload or view information that we would not do so in person to someone else.
+
+Lecture 4 : Moral Reasoning and Professional Ethics by Stephen Cohen
+Ethical Decision Making
+To come to an ethical conclusion is hard as there is no set formula to calculate it. There are a lot of variables that can contribute to it. A common example is reasoning with false equivalency. Reasoning with false equivalency is the idea that if something is legal then it is moral. This leads onto the next notion that if something is not illegal, then it is acceptable. However this is not true as what is required by law is different from what is required by an ethical view.
+
+Ford Pinto Example
+The Ford Pinto case is a good example to learn that just because the laws allow it, does not make it ethically right. Ford wanted to compete with their Japanese rivals and created a car in just over half the standard time to create a new car. This led to a poor design that had an exposed bolt between the fuel tank and the bumper. Every time the car was hit from behind, at speeds of over 25 mph, the fuel tank get punctured and an explosion happens. The company was aware of this as it happened while they were still testing the Pinto. However, they chose to not change the design as changing the design (~140 million) was significantly more expensive than giving out compensation (~50 million). Additionally, it was technically legal as regulations at that time said that cars would need to withstand crashes at 20 mph. It is clear that Ford were looking at it from a numerical point of view, which shows us that even though it is not illegal, it does not make it ethically right.
+
+Dirty Hands
+When someone does the right thing amongst the choices that they have, sometimes there are still some small morally wrong actions. Dirty hands is when those small morally wrong actions in the right thing should not be justified based on the reason it was the best choice. An example is when you are given a choice to either shoot one person and the remaining people go free or everyone else will be shot. Choosing to shoot one person would be the best choice since only one person would suffer rather than many people suffering. Dirty hands is when you do not use the excuse of “I chose the best option” to cover up the small wrongs that were done.
+
+Conflict of Interest
+Conflict of interest is when two individuals or groups have varying interests and they conflict with each other. It is not about the effects of the interest but rather how to deal with the different interests. It is a conflict of interest if your nonmoral personal interest or an inappropriate professional interests are taken into consideration. However, if these were separated, then there would be no conflict of interest. There is no set way or rule to resolve conflict of interest as some people can manage to separate while others can’t.
+Lecture 5 : Intellectual Property and Software Patents
+by Stuart Irvine and Ben Hayes
+Intellectual Property
+Intellectual property could be defined as a man’s right to the product of his mind. It acknowledges the role of mental effort put into the production of material values. One of the earliest examples were the trial of poets who stole certain words from other poets. The five main aspects of modern day intellectual property consists of patents, copyrights, trade marks, trade secrets and design. 
+
+What is a patent?
+Patent is a legal contract, lasting up to 20 years, between the pantee and the government. It ensures that the pantee has the right to exclude others from exploiting their invention. Other parties can use the invention provided that they have consent from the pantee.
+To register a patent, the idea must be new, non-obvious and it is an eligible subject matter. This would be determined by the patent officer. The claim inside the patent will be used to state what the patent covers. If other entities breach the claims of a patent, they will have to provide compensation for using the patent.
+
+Why patents?
+Patents can be used to eliminate your competitors by making sure that no one else can use your invention for a period of time. This can allow you to have extra time to complete your invention rather than competing with your competitors on who invented it first. While a patent is in the process of being registered, there is no law to keep it from being copied. However, once it is patented, the pantee will then be allowed to sue for compensation. Patents can also be used to make money by negotiation. If another company wants to use your invention to improve their product, negotiations can be made so that the company pays each time they create one of their products. Finally, patents can be used to attract investors to invest into the company as they are assured that other entities in the country won’t be allowed to steal the invention.
+
+How to register a patent?
+Patents are only applicable within the country where the patent was registered. Thus if a company wants to patent an idea across Europe, they would need to apply for a patent in every country. Each patent office will check if there is a similar patent already existed. If it does, the patent office will reply back with the patent that already existed and you have the option to change your patent application and reapply.
+
+What is worth patenting?
+Patents are expensive. It does not just include the cost to apply for a patent, there are also maintenance fees associated. Enforcing the patent rights are significantly more expensive than obtaining a patent and there is no point in having a patent if you do not have  the resources to enforce it. Since each case is different, companies would need to consider if not having a patent would cost more damage than not having one.
+
+Rachel Hwang (z5162384) lecture summaries

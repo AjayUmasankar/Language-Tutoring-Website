@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <div class="container">
+    <form action="" method="post" style="width: 100%; height: 100%;">
+      <div class="text-center mb-4">
+        <h1 class="h3 mb-3 font-weight-normal">Create a New Test</h1>
+      </div>
+
+      <div class="form-label-group">
+        <p>What language is the test in?</p>
+        <input type="text" class="form-control translate" name="language" placeholder="Language">
+      </div>
+
+      <div class="form-label-group">
+        <p>Translate from language to English</p>
+        <input type="text" class="form-control translate" name="question1" placeholder="language">
+        <input type="text" class="form-control translate" name="a1" placeholder="English"><br>
+        <input type="text" class="form-control translate" name="q2" placeholder="language">
+        <input type="text" class="form-control translate" name="a2" placeholder="English"><br>
+        <input type="text" class="form-control translate" name="q3" placeholder="language">
+        <input type="text" class="form-control translate" name="a3" placeholder="English"><br>
+      </div>
+
+      <br>
+      <div class="form-label-group">
+        <p>Translate from English to language</p>
+        <input type="text" class="form-control translate" name="q4" placeholder="English">
+        <input type="text" class="form-control translate" name="a4" placeholder="language"><br>
+        <input type="text" class="form-control translate" name="q5" placeholder="English">
+        <input type="text" class="form-control translate" name="a5" placeholder="language"><br>
+        <input type="text" class="form-control translate" name="q6" placeholder="English">
+        <input type="text" class="form-control translate" name="a6" placeholder="language"><br>
+      </div>
+
+      <br>
+      <div class="form-label-group">
+        <p>Translate this sentence from language to English</p>
+        <input type="text" class="form-control post-input" name="q7" placeholder="language">
+        <input type="text" class="form-control post-input" name="a7" placeholder="English">
+      </div>
+
+      <br>
+      <div class="form-label-group">
+        <p>Translate this sentence from English to language</p>
+        <input type="text" class="form-control post-input" name="q8" placeholder="English">
+        <input type="text" class="form-control post-input" name="a8" placeholder="language">
+      </div>
+
+      <br>
+      <div class="form-label-group">
+        <p>Question for written examination. To be written in language</p>
+        <input type="text" class="form-control post-input" name="q9" placeholder="Ask your question here">
+      </div>
+
+      <br>
+      <div class="form-label-group">
+        <p>Select the difficulty level</p>
+        <select name="level">
+          <option value="beginner">Beginner</option>
+          <option value="intermediate">Intermediate</option>
+          <option value="advanced">Advanced</option>
+        </select>
+      </div>
+
+      <button class="btn btn-primary btn-lg btn-block SignUpBtn" type="submit" style="width: 22%;position: relative;top: -3rem;left: 25rem;">Create Test</button>
+     
+    </form>
+  </div>
+{% endblock content %}

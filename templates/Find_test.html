@@ -1,0 +1,106 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="findTestBG">
+  <div class="searchTestBG"></div>
+  <div class="col-md-5 p-lg-5 mx-auto my-5 fontImageFront">
+    <h1 class="display-4 font-weight-normal">Find tests</h1>
+    <p class="lead font-weight-normal">View all available tests</p>
+    {% if current_user.usertype != 3 %}
+    <a class="btn btn-outline-secondary" style="text-shadow: none;" href="{{ url_for('find_all_completed_test_by_user', user_id=current_user.id) }}">View all of your attempted tests</a>
+    {% endif %}
+    {% if current_user.usertype != 1 %}
+    <a class="btn btn-outline-secondary" style="text-shadow: none;" href="{{ url_for('create_test')}}">New Test</a>
+    {% endif %}
+  </div>
+  <div class="searchBar2">
+    <div class="searchBarContainer">
+      <div class="allBars">
+        <div class="searchContainer">
+          <i class="fa fa-language searchIcon"></i>
+          <input type="text" class="searchBarInner" id="searchLanguage" onkeyup="searchLanguage()" placeholder="Search by Language" style="border-right: 1px solid #80808042;">
+        </div>
+        <div class="searchContainer">
+          <i class="fa fa-level-up searchIcon"></i>
+          <input type="text" class="searchBarInner" id="searchLevel" onkeyup="searchLevel()" placeholder="Search by Level">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="srBG">
+    <div class="searchResult">
+      {% if tests == [] %}
+        <p>There are currently no tests. Please wait while our tutor creates one</p>
+      {% else %}
+      <table id='table' style="margin-left: 30%;">
+        <tr class='header' style="border-bottom: 1px solid #ffffff47;">
+          <th>Language</th>
+          <th>Level</th>
+        </tr>
+          {% for i in tests %}
+            <tr style="border-bottom: 1px solid #ffffff47;">
+            <td>{{ i.language }}</td>
+            <td>{{ i.level }}</td>
+            <td>
+              <a class="btn btn-outline-primary" href="{{ url_for('attempt_test', id=i.id) }}">Attempt Test</a>
+            </td>
+            {% if (current_user.usertype == 3) or ((current_user.usertype == 2) and (approved is sameas True)) %}
+            <td>
+              <a class="btn btn-outline-primary" href="{{ url_for('view_test', id=i.id) }}">View Test</a>
+            </td>
+            {% endif %}
+            </tr>
+          {% endfor %}
+        {% endif %}
+      </table>
+    </div>  
+  </div>
+</div>
+
+{% endblock content %}
+
+{% block script %}
+<script>
+  // https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_filter_table
+
+  function searchLanguage() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("searchLanguage");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("table");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+
+  function searchLevel() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("searchLevel");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("table");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[1];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+</script>
+{% endblock script %}

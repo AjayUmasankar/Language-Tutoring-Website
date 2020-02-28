@@ -1,0 +1,167 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="findTutorBG">
+  <div class="searchBG"></div>
+  <div class="col-md-5 p-lg-5 mx-auto my-5 fontImageFront">
+    <h1 class="display-4 font-weight-normal">Find Tutor</h1>
+    <p class="lead font-weight-normal">Find your tutor here</p>
+  </div>
+  <div class="searchBar">
+    <div class="searchBarContainer">
+      <div class="allBars">
+        <div class="searchContainer">
+          <i class="fa fa-address-card searchIcon"></i>
+          <input type="text" class="searchBarInner" id="searchName" onkeyup="searchName()" placeholder="Search by Name" style="border-right: 1px solid #80808042;">
+        </div>
+         <div class="searchContainer">
+          <i class="fa fa-location-arrow searchIcon"></i>
+          <input type="text" class="searchBarInner" id="searchLocation" onkeyup="searchLocation()" placeholder="Search by Location" style="border-right: 1px solid #80808042;">
+        </div>
+        <div class="searchContainer">
+          <i class="fa fa-language searchIcon"></i>
+          <input type="text" class="searchBarInner" id="searchLanguage" onkeyup="searchLanguage()" placeholder="Search by Language">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="srBG">
+    <div class="searchResult">
+      {% if tutor == [] %}
+      <p class="header">There are currently no tutors. Would you like to become a tutor?</p>
+      {% else %}
+      <table id='table'>
+        <tr class='header'>
+          <th>Tutor Name</th>
+          <th>Photo</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Location</th>
+          <th>Language</th>
+          <th onclick="sortTable(6)">Rate</th>
+        </tr>
+          {% for i in tutor %}
+          {% set tutor = tutor[loop.index - 1] %}
+          <tr>
+            <td>{{ tutor.user.name }}</td>
+            <td><img src="{{ url_for('display_image_user', id = tutor.user_id)}}" style="height: auto; width: auto; max-width: 10rem; max-height: 5rem; margin-top: 0.25rem;"/></td>
+            <td>{{ tutor.user.email }}</td>
+            <td>{{ tutor.user.phone }}</td>
+            <td>{{ tutor.user.location }}</td>
+            <td>{{ tutor.languagetoteach }}</td>
+            <td>{{ tutor.rate }}</td>
+            <td>
+              <a class="fa fa-id-badge vgBtn" href="{{ url_for('user', username=tutor.user.username) }}"   style="font-size: 1.5rem;"> 
+            </td>
+          </tr>
+          {% endfor %}
+        {% endif %}
+      </table>
+    </div>  
+  </div>
+
+</div>
+
+{% endblock content %}
+
+{% block script %}
+<script>
+  // https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_filter_table
+  function searchName() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("searchName");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("table");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+
+  function searchLocation() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("searchLocation");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("table");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[4];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+
+  function searchLanguage() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("searchLanguage");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("table");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[5];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+
+  // Taken straight from https://www.w3schools.com/howto/howto_js_sort_table.asp
+  function sortTable(n) {
+  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById("table");
+  switching = true;
+  dir = "asc";
+  while (switching) {
+    switching = false;
+    rows = table.rows;
+    for (i = 1; i < (rows.length - 1); i++) {
+      shouldSwitch = false;
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      if (dir == "asc") {
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          shouldSwitch = true;
+          break;
+        }
+      } else if (dir == "desc") {
+        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      switchcount ++;
+    } else {
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
+}
+</script>
+{% endblock script %}

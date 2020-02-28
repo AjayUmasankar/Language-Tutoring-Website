@@ -1,0 +1,130 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="findTutorBG">
+  <div class="searchGroupBG"></div>
+  <div class="col-md-5 p-lg-5 mx-auto my-5 fontImageFront">
+    <h1 class="display-4 font-weight-normal">Groups</h1>
+    <p class="lead font-weight-normal">Create or join groups here</p>
+    <a class="btn btn-outline-secondary" style="text-shadow: none;" href="{{ url_for('create_group')}}">New Group</a>
+  </div>
+  <div class="searchBar">
+    <div class="searchBarContainer">
+      <div class="allBars">
+        <div class="searchContainer">
+          <i class="fa fa-address-card searchIcon"></i>
+          <input type="text" class="searchBarInner" id="searchName" onkeyup="searchName()" placeholder="Search by Name" style="border-right: 1px solid #80808042;">
+        </div>
+         <div class="searchContainer">
+          <i class="fa fa-location-arrow searchIcon"></i>
+          <input type="text" class="searchBarInner" id="searchLocation" onkeyup="searchLocation()" placeholder="Search by Location" style="border-right: 1px solid #80808042;">
+        </div>
+        <div class="searchContainer">
+          <i class="fa fa-language searchIcon"></i>
+          <input type="text" class="searchBarInner" id="searchLanguage" onkeyup="searchLanguage()" placeholder="Search by Language">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="srBG">
+    <div class="searchResult">
+      {% if groups == [] %}
+        <p>There are currently no groups. Would you like to create a group?</p>
+      {% else %}
+      <table id='table'>
+        <tr class='header' style="border-bottom: 1px solid #ffffff47;">
+          <th>Group Name</th>
+          <th>Description</th>
+          <th>Group Admin</th>
+          <th>Meeting Day</th>
+          <th>Meeting Time</th>
+          <th>Location</th>
+          <th>Language</th>
+        </tr>
+          {% for i in groups %}
+            {% set group = groups[loop.index - 1] %}
+            <tr style="border-bottom: 1px solid #ffffff47;">
+            <td>{{ group.group_name }}</td>
+            <td>{{ group.desc }}</td>
+            <td><a href="{{ url_for('user', username=group.group_admin.username) }}" style="color: aliceblue;">{{ group.group_admin.name }}</a></td>
+            <td>{{ group.meeting_day }}</td>
+            <td>{{ group.meeting_time }}</td>
+            <td>{{ group.location }}</td>
+            <td>{{ group.language }}</td>
+            <td>
+                <a class="fa fa-users vgBtn" href="{{ url_for('view_group', id=group.id) }}"  style="font-size: 1.5rem;">
+                
+            </td>
+            </tr>
+          {% endfor %}
+        {% endif %}
+      </table>
+    </div>  
+  </div>
+</div>
+
+{% endblock content %}
+
+{% block script %}
+<script>
+  // https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_filter_table
+  function searchName() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("searchName");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("table");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+
+  function searchLocation() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("searchLocation");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("table");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[5];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+
+  function searchLanguage() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("searchLanguage");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("table");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[6];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+</script>
+{% endblock script %}

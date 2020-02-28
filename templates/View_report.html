@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 order-md-2 mb-4" style="height: auto;">
+      <hr class="mb-4" style="width: 52rem;">
+      <div class="col-md-8 order-md-1" style="height: auto;">
+        <h4 class="mb-3 signupTitle" style="text-align: center;margin-top: 0rem;">Report #{{ report.id }}</h4>
+        <form action="" method="post" class="needs-validation" novalidate style="width: 55rem;">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <p style="display: inline-block">Reportee</p><pre style="display: inline-block">       </pre><p style="display: inline-block"><a href="{{ url_for('user', username=user1.username) }}">{{ user1.name }}</a></p><br>
+              <p style="display: inline-block">Reportor</p><pre style="display: inline-block">        </pre><p style="display: inline-block"><a href="{{ url_for('user', username=user2.username) }}">{{ user2.name }}</a></p><br>
+              <p style="display: inline-block">Date reported</p><pre style="display: inline-block">   </pre><p style="display: inline-block">{{ report.report_date }}</p><br>
+              <p style="display: inline-block">Reason</p><pre style="display: inline-block">         </pre><p style="display: inline-block">{{ report.reason }} </p><br>
+              <p style="display: inline-block">Status</p><pre style="display: inline-block">          </pre><p style="display: inline-block">{{ report.status }}</p><br>
+            </div>
+          </div>
+            {% if report.status is sameas None %}
+              <button class="btn mdBtn" name="status_btn" value="approved" type="submit" style="margin-left: 15rem;">Approve</button>
+              <button class="btn mdBtn" name="status_btn" value="reject" type="submit" style="margin-left: 2rem;">Reject</button>
+            {% endif %}
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock content %}
+
+
+{% block script %}
+<script>
+  document.getElementById("skipBtn").addEventListener("click", (e) => {})
+</script>
+{% endblock script %}

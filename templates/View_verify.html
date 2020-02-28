@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="order-md-2 mb-4" style="height: auto;">
+      <hr class="mb-4" style="width: 52rem;">
+      <div style="height: auto; margin-left: 5rem;">
+        <h4 class="signupTitle" style="margin-left: 32%;;">Verification #{{ tutor.id }}</h4>
+        <form action="" method="post" class="needs-validation" novalidate style="width: 55rem;">
+          <div class="row">
+            <div>
+              <p style="display: inline-block">Tutor Name</p><p class="answer"  style="display: inline-block">{{ tutor.username }}</p><br>
+              <p style="display: inline-block">Language to teach</p><p class="answer" style="display: inline-block">{{ tutor.tutorinfo.languagetoteach }}</a></p><br><br>
+                <iframe src="{{ url_for('display_idfile', id = tutor.id)}}" style="display: inline-block;"></iframe>
+                <iframe src="{{ url_for('display_qualifile', id = tutor.id)}}" style="display: inline-block;"></iframe><br>
+            </div>
+          </div>
+          <br>
+          <p style="display: inline-block">Test Result</p>
+          {% if test is sameas None %}
+            <p class="answer" style="display: inline-block;">User has not completed the test yet</p><br>
+          {% else %}
+            <a class="btn btn-outline-primary" style="display: inline-block; margin-left: 20rem;" href="{{ url_for('find_all_completed_test_by_user', user_id=tutor.id) }}">View Test Result</a>
+          {% endif %}
+          <br>
+            {% if tutor.tutorinfo.approved is not sameas True %}
+              <button class="btn mdBtn" name="status_btn" value="approved" type="submit" style="margin-left: 40%;">Approve</button>
+            {% elif tutor.tutorinfo.approved is sameas True %}
+              <button class="btn mdBtn" name="status_btn" value="reject" type="submit" style="margin-left: 40%;">Reject</button>
+            {% endif %}
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock content %}
+
+
+{% block script %}
+<script>
+  document.getElementById("skipBtn").addEventListener("click", (e) => {})
+</script>
+{% endblock script %}

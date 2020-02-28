@@ -1,0 +1,172 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="findTutorBG">
+  <div class="searchTestResultBG"></div>
+  <div class="col-md-5 p-lg-5 mx-auto my-5 fontImageFront">
+    <h1 class="display-4 font-weight-normal">Test Result</h1>
+    <p class="lead font-weight-normal">View all tests completed by user : {{ user.username }}</p>
+  </div>
+  <div class="searchBar2">
+    <div class="searchBarContainer">
+      <div class="allBars">
+        <div class="searchContainer">
+          <i class="fa fa-language searchIcon"></i>
+          <input type="text" class="searchBarInner" id="searchLanguage" onkeyup="searchLanguage()" placeholder="Search by Language" style="border-right: 1px solid #80808042;">
+        </div>
+        <div class="searchContainer">
+          <i class="fa fa-level-up searchIcon"></i>
+          <input type="text" class="searchBarInner" id="searchLevel" onkeyup="searchLevel()" placeholder="Search by Level">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="srBG">
+    <div class="searchResult">
+      {% if all_test is sameas None %}
+        <p>There are currently no completed tests.</p>
+      {% else %}
+      <table id='table' style="margin-left: 20%;">
+        <tr class='header' style="border-bottom: 1px solid #ffffff47;">
+          <th>Language</th>
+          <th>Level</th>
+          <th>Mark</th>
+          <!-- <th>Status</th> -->
+        </tr>
+          {% for i in all_test %}
+            <tr style="border-bottom: 1px solid #ffffff47;">
+            <td>{{ i.test.language }}</td>
+            <td>{{ i.test.level }}</td>
+            <td onclick="sortTable(2)">{{ i.mark * 100 / 8 }}%</td>
+            <td>
+              <a class="fa fa-file-text vgBtn" href="{{ url_for('view_test_attempt', test_attempt_id=i.id) }}">View Test Attempt</a>
+            </td>
+            </tr>
+          {% endfor %}
+        {% endif %}
+      </table>
+    </div>  
+  </div>
+</div>
+
+{% endblock content %}
+
+{% block script %}
+<script>
+  // https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_filter_table
+  function searchLevel() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("searchLevel");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("table");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[1];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+
+  function searchLanguage() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("searchLanguage");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("table");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+
+  function searchStatus() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("searchStatus");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("table");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[4];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+
+// Taken straight from https://www.w3schools.com/howto/howto_js_sort_table.asp
+function sortTable(n) {
+  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById("table");
+  switching = true;
+  // Set the sorting direction to ascending:
+  dir = "asc";
+  /* Make a loop that will continue until
+  no switching has been done: */
+  while (switching) {
+    // Start by saying: no switching is done:
+    switching = false;
+    rows = table.rows;
+    /* Loop through all table rows (except the
+    first, which contains table headers): */
+    for (i = 1; i < (rows.length - 1); i++) {
+      // Start by saying there should be no switching:
+      shouldSwitch = false;
+      /* Get the two elements you want to compare,
+      one from current row and one from the next: */
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      /* Check if the two rows should switch place,
+      based on the direction, asc or desc: */
+      if (dir == "asc") {
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          // If so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      } else if (dir == "desc") {
+        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+          // If so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      /* If a switch has been marked, make the switch
+      and mark that a switch has been done: */
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      // Each time a switch is done, increase this count by 1:
+      switchcount ++;
+    } else {
+      /* If no switching has been done AND the direction is "asc",
+      set the direction to "desc" and run the while loop again. */
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
+}
+</script>
+{% endblock script %}

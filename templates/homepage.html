@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div id='root'>
+  <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light bg">
+    <div class="col-md-5 p-lg-5 mx-auto">
+      <h1 class="row skew-title" style="width: 20rem;margin-top: -4rem;">
+    <span>L</span><span>E</span><span>A</span><span>R</span><span>N</span><span>I</span><span>N</span><span class="last">G</span>
+  </h1>
+  <h1 class="row skew-title" style="width: 20rem;margin-left: 9rem;">
+    <span class="alt">L</span><span class="alt">A</span><span class="alt">N</span><span class="alt">G</span><span class="alt">U</span><span class="alt">A</span><span class="alt">G</span><span class="alt last">E</span>
+  </h1>
+      <p class="lead font-weight-normal bgText" style="margin-top: 7rem;">Choose to be a student, learn a new language and find your tutor! Choose to be a Tutor, find your students and get pay!</p>
+      {% if current_user.is_anonymous %}
+        <div class="homepageBtn" style="margin-top: 9.3rem">
+          <a class="btn btn-outline-secondary" href="{{ url_for('register') }}">Join As A Student</a>
+          <a class="btn btn-outline-secondary" href="{{ url_for('register') }}">Join As A Tutor</a>
+        </div>
+      {% elif current_user.usertype == 3 %}
+        <div class="homepageBtn" style="margin-top: 9.3rem">
+          <a class="btn btn-outline-secondary" href="{{ url_for('reports') }}">View All Reports</a>
+        </div>
+      {% else %}
+        <p class="lead font-weight-normal" style="margin-right: 2rem;">Let's get started!</p>
+        <div class="homepageBtn">
+          <a class="btn btn-outline-secondary" href="{{ url_for('find_tutor') }}">Find A Tutor</a>
+          <a class="btn btn-outline-secondary" href="{{ url_for('videos') }}">Watch A Video</a>
+          <a class="btn btn-outline-secondary" href="{{ url_for('forum') }}">Search the Forum</a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+
+
+
+{% endblock content %}
+
+{% block script %}
+<script type="text/javascript">
+  (function() {
+    $('.skew-title').children('span').hover((function() {
+      var $el, n;
+      $el = $(this);
+      n = $el.index() + 1;
+      $el.addClass('flat');
+      if (n % 2 === 0) {
+        return $el.prev().addClass('flat');
+      } else {
+        if (!$el.hasClass('last')) {
+          return $el.next().addClass('flat');
+        }
+      }
+    }), function() {
+      return $('.flat').removeClass('flat');
+    });
+
+  }).call(this);
+</script>
+{% endblock script %}

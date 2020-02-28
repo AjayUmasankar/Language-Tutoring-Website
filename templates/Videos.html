@@ -1,0 +1,187 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="findTutorBG">
+  <div class="searchVideoBG"></div>
+  <div class="col-md-5 p-lg-5 mx-auto my-5 fontImageFront">
+    <h1 class="display-4 font-weight-normal">Find Videos</h1>
+    <p class="lead font-weight-normal">Watch prerecorded videos here</p>
+    {% if current_user.usertype != 1 %}
+    <a class="btn btn-outline-secondary" style="text-shadow: none;" href="{{ url_for('upload_video')}}">Upload a new Video</a>
+    {% endif %}
+  </div>
+  <div class="searchBar">
+    <div class="searchBarContainer">
+      <div class="allBars">
+        <div class="searchContainer">
+          <i class="fa fa-file-video-o searchIcon"></i>
+          <input type="text" class="searchBarInner" id="searchVidTitle" onkeyup="searchVidTitle()" placeholder="Search by Video Title" style="border-right: 1px solid #80808042;">
+        </div>
+         <div class="searchContainer">
+          <i class="fa fa-user searchIcon"></i>
+          <input type="text" class="searchBarInner" id="searchUploadUser" onkeyup="searchUploadUser()" placeholder="Search by Upload User" style="border-right: 1px solid #80808042;">
+        </div>
+        <div class="searchContainer">
+          <i class="fa fa-language searchIcon"></i>
+          <input type="text" class="searchBarInner" id="searchLanguage" onkeyup="searchLanguage()" placeholder="Search by Language">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="srBG">
+    <div class="searchResult">
+      {% if videos == [] %}
+      <p class="header">There are currently no videos. Please wait while our tutors add some.</p>
+      {% else %}
+      <table id='table' style="margin-left: 3.5rem;">
+        <tr class='header'>
+          <th>Video Title</th>
+          <th>Uploader</th>
+          <th>Language</th>
+          <th>Video</th>
+        </tr>
+        {% for i in videos %}
+        {% set vid = videos[loop.index - 1] %}
+          <tr>
+            <td>{{ vid.name }}</td>
+            <td>{{ vid.user.username }}</td>
+            <td>{{ vid.language }}</td>
+            <td>
+            <video width="480" height="320" controls>
+                <source src="../static/videos/{{ vid.name }}" type='video/mp4;'>
+            </video>
+            </td>
+            {% if current_user.usertype == 3 %}
+            <td>
+              <a class="btn delete-btn" href="{{ url_for('delete_video', vid_id = vid.id) }}">Delete Video</a>
+            </td>
+            {% endif %}
+          </tr>
+          {% endfor %}
+        {% endif %}
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+{% block script %}
+<script>
+  // https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_filter_table
+  function searchVidTitle() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("searchVidTitle");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("table");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+
+  function searchUploadUser() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("searchUploadUser");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("table");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[1];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+
+  function searchLanguage() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("searchLanguage");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("table");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[2];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+
+  // Taken straight from https://www.w3schools.com/howto/howto_js_sort_table.asp
+  function sortTable(n) {
+  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById("table");
+  switching = true;
+  // Set the sorting direction to ascending:
+  dir = "asc";
+  /* Make a loop that will continue until
+  no switching has been done: */
+  while (switching) {
+    // Start by saying: no switching is done:
+    switching = false;
+    rows = table.rows;
+    /* Loop through all table rows (except the
+    first, which contains table headers): */
+    for (i = 1; i < (rows.length - 1); i++) {
+      // Start by saying there should be no switching:
+      shouldSwitch = false;
+      /* Get the two elements you want to compare,
+      one from current row and one from the next: */
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      /* Check if the two rows should switch place,
+      based on the direction, asc or desc: */
+      if (dir == "asc") {
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          // If so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      } else if (dir == "desc") {
+        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+          // If so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      /* If a switch has been marked, make the switch
+      and mark that a switch has been done: */
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      // Each time a switch is done, increase this count by 1:
+      switchcount ++;
+    } else {
+      /* If no switching has been done AND the direction is "asc",
+      set the direction to "desc" and run the while loop again. */
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
+}
+</script>
+{% endblock script %}

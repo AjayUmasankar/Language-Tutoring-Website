@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <div class="container" style="padding-bottom: 3rem;">
+    <form action="" method="post" style="width: 100%; height: 100%;">
+      <div class="text-center mb-4">
+        <h1 class="h3 mb-3 font-weight-normal" style="color: white;">Attempt Test for {{ test.language }} {{ test.level }} </h1>
+      </div>
+
+      <div class="form-label-group">
+        <p style="color: black;">Translate from {{ language }} to English</p>
+        <p style="color: white;">{{ test.q1 }}</p>
+        <input type="text" class="form-control translate" name="a1" placeholder="English"><br><br>
+        <p style="color: white;">{{ test.q2 }}</p>
+        <input type="text" class="form-control translate" name="a2" placeholder="English"><br><br>
+        <p style="color: white;">{{ test.q3 }}</p>
+        <input type="text" class="form-control translate" name="a3" placeholder="English"><br><br>
+      </div>
+
+      <div class="form-label-group">
+        <p style="color: black;">Translate from English to {{ test.language }}</p>
+        <p style="color: white;">{{ test.q4 }}</p>
+        <input type="text" class="form-control translate" name="a4" placeholder="{{ test.language }}"><br><br>
+        <p style="color: white;">{{ test.q5 }}</p>
+        <input type="text" class="form-control translate" name="a5" placeholder="{{ test.language }}"><br><br>
+        <p style="color: white;">{{ test.q6 }}</p>
+        <input type="text" class="form-control translate" name="a6" placeholder="{{ test.language }}"><br><br>
+      </div>
+
+      <div class="form-label-group">
+        <p style="color: black;">Translate this sentence from {{ test.language }} to English</p>
+        <p style="color: white;">{{ test.q7 }}</p>
+        <input type="text" class="form-control post-input" name="a7" placeholder="English">
+      </div>
+
+      <div class="form-label-group">
+        <p style="color: black;">Translate this sentence from English to {{ test.language }}</p>
+        <p class="question">{{ test.q8 }}</p>
+        <input type="text" class="form-control post-input" name="a8" placeholder="{{ test.language }}">
+      </div>
+
+      <div class="form-label-group">
+        <p style="color: black;">Please answer the following question in {{ test.language }}</p>
+        <p class="question">{{ test.q9 }}</p>
+        <textarea type="text" class="form-control post-input" name="a9" style="height: 15rem;">Type your answer here</textarea>
+      </div>
+      <button class="btn btn-primary btn-lg btn-block SignUpBtn" type="submit" style="width: 22%;position: relative;left: 25rem;">Submit Answer</button>
+    </form>
+    </div>
+{% endblock content %}

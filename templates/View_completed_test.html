@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <div class="container" style="padding-top: 1rem;">
+      <div class="text-center mb-4">
+        <h1 class="h3 mb-3 font-weight-normal" style="color: white;">Results for {{ ans.language }} {{ ans.level }} done by {{ test.user.username }}</h1>
+      </div>
+
+      <div class="form-label-group">
+        <p>Translate from {{ ans.language }} to English</p>
+        <p class="question">{{ ans.q1 }}</p><p class="answer" style="color: lightgreen;">{{ test.a1 }}</p><p class="answer" style="left: 70%;">{{ ans.a1 }}</p><br>
+        <p class="question">{{ ans.q2 }}</p><p class="answer" style="color: lightgreen;">{{ test.a2 }}</p><p class="answer" style="left: 70%;">{{ ans.a2 }}</p><br>
+        <p class="question">{{ ans.q3 }}</p><p class="answer" style="color: lightgreen;">{{ test.a3 }}</p><p class="answer" style="left: 70%;">{{ ans.a3 }}</p><br>
+      </div>
+
+      <div class="form-label-group">
+        <p>Translate from English to {{ ans.language }}</p>
+        <p class="question">{{ ans.q4 }}</p><p class="answer" style="color: lightgreen;">{{ test.a4 }}</p><p class="answer" style="left: 70%;">{{ ans.a4 }}</p><br>
+        <p class="question">{{ ans.q5 }}</p><p class="answer" style="color: lightgreen;">{{ test.a5 }}</p><p class="answer" style="left: 70%;">{{ ans.a5 }}</p><br>
+        <p class="question">{{ ans.q6 }}</p><p class="answer" style="color: lightgreen;">{{ test.a6 }}</p><p class="answer" style="left: 70%;">{{ ans.a6 }}</p><br>
+      </div>
+
+      <div class="form-label-group">
+        <p>Translate this sentence from {{ ans.language }} to English</p>
+        <p class="question">{{ ans.q7 }}</p><br>
+        <p style="color: lightgreen; margin: 0;">{{ test.a7 }}</p>
+        <p style="color: lightpink;">{{ ans.a7 }}</p>
+      </div>
+
+      <div class="form-label-group">
+        <p>Translate this sentence from English to {{ ans.language }}</p>
+        <p class="question">{{ ans.q8 }}</p><br>
+        <p style="color: lightgreen; margin: 0;">{{ test.a8 }}</p>
+        <p style="color: lightpink;">{{ ans.a8 }}</p>
+      </div>
+
+      <div class="form-label-group">
+        <p>Question for written examination. To be written in {{ ans.language }}</p>
+        <p class="question">{{ ans.q9 }}</p><br>
+        <p class="question" style="color: lightgreen;">{{ test.a9 }}</p>
+      </div>
+
+      <div class="form-label-group">
+        <p style="display: inline-block;">Mark</p>
+        <p class="question" style="display: inline-block; margin-left: 10rem;">{{ test.mark * 100/ 8 }}%</p><br><br>
+      </div>
+  </div>
+{% endblock content %}

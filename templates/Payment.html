@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="paymentBG" "></div>
+<div class="col-md-5 p-lg-5 mx-auto my-5 fontImageFront" style="top: 6rem;">
+  <h1 class="display-4 font-weight-normal">Payment Options</h1>
+  <h4 class="lead font-weight-normal">Salt Fish BPAY</h4>
+  <h6>Please allow upto 48 hours to show in your balance</h6>
+  <p>Biller Code: 123456 (obviously fake)</p>
+  <p>Reference: {{ current_user.id }}</p>
+  <p>Please click the button to inform us after you complete the payment</p>
+  <a class="btn btn-outline-secondary" href="#" style="font-style: inherit;">Complete payment</a>
+</div>
+
+</div>
+
+{% endblock content %}

@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <div class="container">
+      <div class="text-center mb-4" style="padding-top: 1rem;">
+        <h1 class="h3 mb-3 font-weight-normal" style="color: white;">View Test for {{ test.language }} {{ test.level }} </h1>
+      </div>
+
+      <div class="form-label-group">
+        <p>Translate from {{ test.language }} to English</p>
+        <p class="question">{{ test.q1 }}</p><p class="answer">{{ test.a1 }}</p><br>
+        <p class="question">{{ test.q2 }}</p><p class="answer">{{ test.a2 }}</p><br>
+        <p class="question">{{ test.q3 }}</p><p class="answer">{{ test.a3 }}</p><br>
+      </div>
+
+      <div class="form-label-group">
+        <p>Translate from English to {{ test.language }}</p>
+        <p class="question">{{ test.q4 }}</p><p class="answer">{{ test.a4 }}</p><br>
+        <p class="question">{{ test.q5 }}</p><p class="answer">{{ test.a5 }}</p><br>
+        <p class="question">{{ test.q6 }}</p><p class="answer">{{ test.a6 }}</p><br>
+      </div>
+
+      <div class="form-label-group">
+        <p>Translate this sentence from {{ test.language }} to English</p>
+        <p class="question">{{ test.q7 }}</p><p class="answer">{{ test.a7 }}</p>
+      </div>
+
+      <div class="form-label-group">
+        <p>Translate this sentence from English to {{ test.language }}</p>
+        <p class="question">{{ test.q8 }}</p><p class="answer">{{ test.a8 }}</p>
+      </div>
+
+      <div class="form-label-group">
+        <p>Question for written examination. To be written in {{ test.language }}</p>
+        <p class="question">{{ test.q9 }}</p>
+      </div>
+
+      <div class="form-label-group">
+        <p>Difficulty : {{ test.level }}</p>
+      </div>
+  </div>
+{% endblock content %}

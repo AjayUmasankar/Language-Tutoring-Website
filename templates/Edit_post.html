@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <div class="container">
+    <form action="" method="post">
+      <div class="text-center mb-4">
+        <h1 class="h3 mb-3 font-weight-normal">Edit Post</h1>
+      </div>
+
+      <div class="form-label-group">
+        <input type="text" class="form-control post-input" id="title" placeholder="{{ post.title}}" name="title">
+      </div>
+
+      <div class="form-label-group">
+        <textarea type="text" class="form-control post-input" id="body" placeholder="{{ post.content }}" name="body" style="height: 15rem; width: 31rem;"></textarea>
+      </div>
+
+      <div style="height: auto;position: absolute;top: 6rem;right: -24rem;width: 20rem;z-index: 10;">
+        <div id="imgPreview">
+          <div id="prompt3">
+            <span id="imgSpan"> Change the photo </span>
+            <input type="file" name="photo" id="photo" class="filepath" onchange="changepic(this)">
+          </div>
+          <img src="#" id="img3" />
+        </div>
+        <a class="btn edit-btn-fixed delete-btn" href="{{ url_for('delete_photo_post', id=post.id) }}" style="width: 10rem; right: 5rem; top: 13rem;">Delete Photo</a>
+      </div>
+
+
+      <!-- Make this smaller -->
+      <div class="form-label-group">
+        <input type="text" class="form-control post-input" id="label" placeholder="{{ post.label }}" name="label">
+      </div>
+      <button class="btn btn-primary btn-lg btn-block SignUpBtn" type="submit" style="margin-left: 22rem; width: 40%;">Edit</button>
+     
+    </form>
+  </div>
+{% endblock content %}

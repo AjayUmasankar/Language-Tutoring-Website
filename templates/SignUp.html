@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <div class="container">
+    <form action="" method="post" class="form-login">
+      <div class="text-center mb-4">
+        <h1 class="h3 mb-3 font-weight-normal">Sign Up</h1>
+        <p>Create your account with email address </p>
+      </div>
+
+      <div class="form-label-group">
+      	<label for="username">Username</label>
+        <input type="text" class="form-control" id="username" placeholder="username" name="username">
+      </div>
+
+      <div class="form-label-group">
+      	<label for="email">Email Address</label>
+        <input type="email" class="form-control" id="email" placeholder="you@example.com" name="email">
+      </div>
+
+      <div class="form-label-group">
+      	<label for="Password">Password</label>
+        <input type="password" class="form-control" id="Password" name="Password" placeholder="Password">
+      </div>
+
+      <div class="form-label-group">
+      	<label for="ConfirmPassword">Confirm Password</label>
+        <input type="password" class="form-control" id="ConfirmPassword" name="ConfirmPassword" placeholder="Enter your password again">
+      </div>
+
+      <div class="checkbox mb-3 remCheck">
+        <label>
+          <input type="checkbox"  id="becomeStudnet" name="becomeStudent"> Join as Student
+          <input type="checkbox"  id="becomeTutor" name="becomeTutor" style="margin-left: 2rem;"> Join as Tutor
+        </label>
+      </div>
+      <div class="checkbox mb-3 remCheck">
+        <label>
+          <input type="checkbox"  id="TermsAndCons" name="TermsAndCons"> I agree I have read the <a href="#popup">Terms and Conditions</a>
+          <div class="popup" id="popup" style="none;">
+            <div class="popup-inner">
+              <div class="popup__text">
+                  <div class="text-center mb-4">
+                    <h1 class="h3 mb-3 font-weight-normal">Terms and Conditions</h1>
+                    <p><iframe src="../static/termsnconditions.txt" style="width: 100%; height: 27rem;"></iframe></p>
+                  </div>
+              </div>
+              <a class="popup__close" href="">X</a>
+            </div>
+        </label>
+      </div>
+      <button class="btn btn-primary btn-lg btn-block SignUpBtn" type="submit" style="margin-left: 8rem; width: 40%; margin-top: 2rem;">Sign up</button>
+     
+    </form>
+  </div>
+{% endblock content %}

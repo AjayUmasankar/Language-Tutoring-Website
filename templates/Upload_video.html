@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+
+{% extends "layout.html" %}
+
+{% block content %}
+  <div class="root">
+    <div class="container" style="padding-top: 1rem;">
+      <div class="text-center mb-4">
+        <h1 class="h3 mb-3 font-weight-normal btTitle">Upload Video</h1>
+        <p>Please only upload MP4 files</p>
+      </div>
+      <form method=post enctype=multipart/form-data>
+        <div class="form-label-group">
+          <label for="language">Name of video</label>
+          <input type="text" class="form-control" id="name"  placeholder="Name" name="name">
+        </div>
+        <br>
+        <div class="form-label-group">
+          <label for="language">Language of video</label>
+          <input type="text" class="form-control" id="language"  placeholder="Language" name="language">
+        </div>
+        <br>
+        <div class="form-label-group">
+          <input type=file name=file>
+        </div>
+        <div class="moreDetailBtn" style="margin-top: 7rem;margin-left: 12rem;">
+          <button class="btn btn-primary btn-lg btn-block mdBtn" id="mdContinue" type="submit" style="margin-left: -4.1rem;">Continue</button>
+        </div>
+      </form>
+ 
+    </div>
+  </div>
+{% endblock content %}
+    

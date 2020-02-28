@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="findTutorBG">
+  <div class="searchReportBG"></div>
+  <div class="col-md-5 p-lg-5 mx-auto my-5 fontImageFront">
+    <h1 class="display-4 font-weight-normal">Reports</h1>
+  </div>
+  <div class="searchBar">
+    <div class="searchBarContainer">
+      <div class="allBars">
+        <div class="searchContainer">
+          <i class="fa fa-info searchIcon"></i>
+          <input type="text" class="searchBarInner" id="searchApprove" onkeyup="searchApprove()" placeholder="Search by status" style="width: 54rem;">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="srBG">
+    <div class="searchResult">
+      <table id='table'>
+        {% if reports == [] %}
+        <tr class="header">There are currently no reports.</tr>
+        {% else %}
+        <tr class='header'>
+          <th>Report ID</th>
+          <th>Reporter's ID</th>
+          <th>Reportee's ID</th>
+          <th>Reason</th>
+          <th>Status</th>
+        </tr>
+          {% for i in reports %}
+          {% set r = reports[loop.index - 1] %}
+          <tr>
+              <td><a href="{{ url_for('view_report', id=r.id) }}">Report#{{ r.id }}</a></td>
+              <td>{{ r.user1_id }}</td>
+              <td>{{ r.user2_id }}</td>
+              <td>{{ r.reason }}</td>
+              <td>{{ r.status }}</td>
+              <td>
+                <a class="btn btn-outline-primary" href="{{ url_for('view_report', id=r.id) }}" style="width: 8rem;">View Report</a>
+              </td>
+          </tr>
+          {% endfor %}
+        {% endif %}
+      </table>
+    </div>     
+  </div>
+</div>
+
+{% endblock content %}
+
+{% block script %}
+<script>
+  // https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_filter_table
+  function searchApprove() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("searchApprove");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("table");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[4];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+</script>
+{% endblock script %}

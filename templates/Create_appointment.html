@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container">
+  {% for message in get_flashed_messages() %}
+  <div class="alert alert-warning">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    {{ message }}
+  </div>
+  {% endfor %}
+
+    <form action="" method="post" class="needs-validation"  style="margin-left: 17em;" novalidate>
+      <div class="text-center mb-4">
+        <h1 class="h3 mb-3 font-weight-normal">Request an appointment</h1>
+        <p> I'd like to make an appointment with {{ tutor.name }} {{ current_user.languagetolearn }} </p>
+      </div>
+
+      <div class="form-label-group booking">
+        <label for="address">Address</label>
+        <input type="text" class="form-control" id="address" placeholder="{{ current_user.location }}" name="address">
+      </div>
+
+      <div class="form-label-group booking">
+        <label for="start_time">Start time</label>
+        <input type="datetime-local" class="form-control" id="start_time" name="start_time">
+      </div>
+
+      <div class="form-label-group booking">
+        <label for="duration">Duration</label>
+            <select name="duration">
+              <option value="30">30 mins</option>
+              <option value="45">45 mins</option>
+              <option value="60">60 mins</option>
+              <option value="60">75 mins</option>
+              <option value="60">90 mins</option>
+            </select>
+      </div>
+
+      <div class="form-label-group booking"><p>All bookings are 50 credits per hour</p><p>Minimum booking is 30 minutes</p></div>
+
+      <button class="btn btn-primary btn-lg btn-block SignUpBtn" type="submit" style="margin-left: 8rem; width: 40%;">Request</button>
+     
+    </form>
+  </div>
+{% endblock content %}

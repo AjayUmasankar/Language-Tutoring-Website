@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="PYTHON_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="Python" name="Python facet">
+      <configuration sdkName="Python 3.7 (Project)" />
+    </facet>
+    <facet type="Python" name="Python facet">
+      <configuration sdkName="Python 3.7 (Project)" />
+    </facet>
+    <facet type="Python" name="Python facet">
+      <configuration sdkName="Python 3.7 (Project)" />
+    </facet>
+    <facet type="Python" name="Python facet">
+      <configuration sdkName="Python 3.7 (Project)" />
+    </facet>
+    <facet type="Python" name="Python facet">
+      <configuration sdkName="Python 3.7 (Project)" />
+    </facet>
+  </component>
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/venv" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Python 3.7 (Project) interpreter library" level="application" />
+  </component>
+  <component name="TestRunnerService">
+    <option name="PROJECT_TEST_RUNNER" value="Unittests" />
+  </component>
+</module>

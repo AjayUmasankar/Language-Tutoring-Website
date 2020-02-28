@@ -1,0 +1,152 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div id="root">
+  <div class="container emp-profile">
+    <form method="post" style="width: 100%;">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="profile-img">
+            <div id="imgPreview" style="margin-left: 2rem;">
+              <img src="{{ url_for('display_image_user', id = current_user.id)}}" style="width: 10rem;"/>
+            </div>
+            <img src="#" id="img3" />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="profile-head">
+            <h5> {{ current_user.username }}</h5>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="about" aria-selected="true">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="appointment-tab" data-toggle="tab" href="#appointment" role="tab" aria-controls="appointment" aria-selected="false">My appointment</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="payment-tab" data-toggle="tab" href="#payment" role="tab" aria-controls="payment" aria-selected="false">My payment</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        {% if current_user.usertype != 3 %}
+        <div class="col-md-2">
+          <a class="btn btn-outline-primary whiteBGBtn" href="{{ url_for('edit_profile') }}" style="margin-top: 3rem;">Edit Profile</a>
+        </div>
+        {% endif %}
+        {% if current_user.usertype == 2 %}
+        <div class="col-md-2">
+          <a class="btn btn-outline-primary beTutor whiteBGBtn" href="{{ url_for('edit_files', username=current_user.username) }}" style="z-index: 10;position: absolute;right: -46rem;top: -7rem;width: 6rem;">Edit files</a>
+        </div>
+        {% endif %}
+        {% if current_user.usertype is sameas 1 %}
+        <div class="col-md-2">
+          <a class="btn btn-outline-primary beTutor whiteBGBtn" href="{{ url_for('become_tutor', username=current_user.username) }}" style="position: absolute;right: -47rem;top: -7rem;" >Become a Tutor</a>
+        </div>
+        {% endif %}
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="profile-work">
+            <p >Language to learn</p>
+            <span>{{ current_user.languagetolearn }}</span>
+            {% if current_user.usertype is sameas 2 %}
+            <p >Language to teach</p>
+            <span>{{ tutorinfo.languagetoteach }}</span>
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="tab-content profile-tab" id="myTabContent">
+            <div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="about-tab">
+              <div class="row">
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label>Name</label>
+                </div>
+                <div class="col-md-6">
+                  <p>{{ current_user.name }}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label>Email</label>
+                </div>
+                <div class="col-md-6">
+                  <p>{{ current_user.email }}</p>
+                </div>
+              </div>
+              {% if current_user.usertype == 2 %}
+              <div class="row">
+                <div class="col-md-6">
+                  <label>Rating</label>
+                </div>
+                <div class="col-md-6">
+                  <p>{{ tutorinfo.rate }}</p>
+                </div>
+              </div>
+              {% endif %}
+            </div>
+
+            <div class="tab-pane fade" id="appointment" role="tabpanel" aria-labelledby="appointment-tab">
+              {% if appointments == [] %}
+              <p>You currently have no appointments.</p>
+              {% else %}
+              <table id='table'>
+                <tr class='header'>
+                  <th>Appointment Number</th>
+                  {% if current_user.usertype == 1 %}
+                  <th>Tutor Name</th>
+                  {% else %}
+                  <th>Student Name</th>
+                  <th>Rate</th>
+                  {% endif %}
+                  <th>Approved</th>
+                </tr>
+
+                {% for i in appointments %}
+                {% set appt = appointments[loop.index - 1] %}
+                {% set tut = tutor[loop.index - 1] %}
+                <tr>
+                  <td><a href="{{ url_for('view_appointment', id=appt.appointment_id) }}">Appointment {{ loop.index }}</a></td>
+                  {% if current_user.usertype == 2 %}
+                  <td><a href="{{ url_for('user', username=appt.student.username) }}">{{ appt.student.name }}</a></td>
+                  {% if appt.rate is sameas '0' %}
+                  <td>{{ appt.rate }}</td>
+                  {% else %}
+                  <td>Not rated yet</td>
+                  {% endif %}
+                  {% else %}
+                  <td><a href="{{ url_for('user', username=tut.username) }}">{{ tut.name }}</a></td>
+                  {% endif %}
+                  <td>{{ appt.approved }}</td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+              </table>
+            </div>
+            {% if current_user.usertype != 3 %}
+            <div class="tab-pane fade" id="payment" role="tabpanel" aria-labelledby="payment-tab">
+              <p>Your balance is : {{ current_user.balance }}</p>
+              <a href="{{ url_for('get_payment') }}">Click here to refresh your balance</a><br>
+              <a href="{{ url_for('payment') }}">Click here to add more to your balance</a>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% if current_user.usertype == 2 %}
+      <div class="row" style="margin-left: 10%;">
+        <div>
+          <iframe src="{{ url_for('display_idfile', id = current_user.id)}}" style="display: inline-block;"></iframe>
+          <iframe src="{{ url_for('display_qualifile', id = current_user.id)}}" style="display: inline-block; margin-left: 6rem;"></iframe><br>
+        </div>
+      </div>
+      {% endif %}
+    </form>
+  </div>
+</div>
+{% endblock %}

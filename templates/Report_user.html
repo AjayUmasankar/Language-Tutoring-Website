@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <div class="container">
+    <form action="" method="post" class="form-login">
+      <div class="text-center mb-4">
+        <h1 class="h3 mb-3 font-weight-normal">Report User</h1>
+      </div>
+
+      <h3 style="font-size: 1rem;">Briefly describe your reasons for reporting {{ username }}</h3>
+
+      <!-- Make this HUGE -->
+      <div class="form-label-group">
+        <input type="text" class="form-control" id="reason" placeholder="Reason for report" name="reason">
+        <div class="invalid-feedback">Please enter a valid reason</div>
+      </div>
+
+      <button class="btn btn-primary btn-lg btn-block SignUpBtn" type="submit" style="margin-left: 8rem; width: 40%;">Report</button>
+      
+    </form>
+  </div>
+{% endblock content %}

@@ -1,0 +1,127 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+  <div class="row"> 
+    <div class="col-md-4 order-md-2 mb-4" style="height: auto;margin-left: 5rem; min-width: 55rem;">
+      
+      {% if current_user.id == post.author_id %}
+      <div class="">
+        <a class="btn edit-btn-fixed" style="top: 3rem;" href="{{ url_for('edit_post', id=post.id) }}">Edit Post</a>
+      </div>
+      {% endif %}
+      {% if (current_user.id == post.author_id) or (current_user.usertype == 3) %}
+      <div class="">
+        <a class="btn edit-btn-fixed delete-btn" style="top: 6rem;" href="{{ url_for('delete_post', id=post.id) }}" style="margin-top: 3rem;">Delete Post</a>
+      </div>
+      {% endif %}
+      <hr class="mb-4" style="width: 52rem;">
+      <div class="col-md-8 order-md-1" style="height: auto;">
+          <div class="row" style="width: 45rem;">
+            <div>
+              <p  style="font-size: 1.6rem;">
+                <i class="fa fa-user-circle-o" aria-hidden="true" ></i>
+                <a href="{{ url_for('user', username=post.author.username) }}" class="postAutor">{{ post.author.name }}</a>
+                <span style="font-size: 1.2rem;"> · {{ post.post_date }}</span>
+              </p>
+              <h1>{{ post.title }}</h1>
+              <p class="postDeatils">{{ post.content }}</p>
+              <a class="fa fa-tag"></a>
+              <span>{{ post.label }}</span>
+            </div>
+
+            {% if post.photo is not sameas None %}
+            <div class="profile-img">
+              <div id="imgPreview postPic" style="margin: 0; height: auto; width: 100%;">
+                  <img src="{{ url_for('display_image', id = post.id)}}"/>
+                </div>
+                <img src="#" id="img3" />
+              </div>
+            </div>
+            {% endif %}
+
+          </div>
+          <h4 style="margin-top: 3rem;color: #e0ddd7;"> Comment List :</h4>
+          <div class="commentContainer">
+            <!-- Add comment -->
+            {% if comments == [] %}
+              <p>There are no comments, would you like to make a comment?</p>
+            {% else %}
+              {% for i in comments %}
+               <!-- Can you make this inline? -->
+                <div>
+                  <p>{{ i.content }}</p>
+                  <p>{{ i.post_date }}</p>
+                  <p><a href="{{ url_for('user', username=i.author.username) }}">{{ i.author.name }}</a></p>
+                  {% if current_user.id == i.author_id %}
+                  <form class="invisible-form" action="{{ url_for('edit_comment', post_id=post.id, comment_id=i.id) }}" style="height: 0;" method="post">
+                    <a class="btn edit-btn-fixed invisible-form-btn" style="color: #FF6A6A;" id="displayEditCommentForm" onclick="displayEditCommentForm({{i.id}})">Edit Comment</a>
+                    <div>
+                    <div id="edit_comment_text+{{i.id}}" style="display: none;">
+                      <input type="text" class="form-control" id="edit_comment" style="width: 35rem; top: 12rem; position: relative;" placeholder="New Comment" name="edit_comment">
+                    </div>
+                    <div  id="edit_comment_btn+{{i.id}}" style="display: none;">
+                      <button class="btn" id="mdContinue" style="top: 9.6rem; position: relative; right: -37rem; width: 10rem;" type="submit">Edit Comment</button>
+                    </div>
+                    </div>
+                  </form>
+                  {% endif %}
+                  {% if (current_user.id == i.author_id) or (current_user.usertype == 3) %}
+                    <form class="invisible-form" action="{{ url_for('delete_comment', post_id=post.id, comment_id=i.id) }}" method="post" style="top: -6rem; height: 3rem;">
+                      <button class="btn delete-btn btn-lg btn-block mdBtn invisible-form-btn" id="mdContinue3" style="position: absolute; margin-top: 3rem;" type="submit">Delete Comment</button>
+                    </form>
+                  {% endif %}
+                </div>
+                <hr class="mb-4" style="width: 52rem;border-top: 1px solid rgba(95, 81, 81, 0.58);">
+              {% endfor %}
+            {% endif %}
+          </div>
+          <form class="form-inline" style="top: 0; width: 52rem;" action="" method="post">
+            {% if current_user.usertype != 3 %}
+              <a class="btn btn-outline-secondary" style="color:#FF6A6A; top: 0; position: absolute;" id="displayCommentForm" onclick="displayCommentForm()">Add Comment</a>
+            {% endif %}
+            <div class="row" id="comment_form" style="display: none; top: 0; position: absolute;">
+              <input type="text" class="form-control" id="comment" style="width: 30rem;" placeholder="Comment" name="comment">
+              <button class="btn btn-primary btn-lg btn-block mdBtn" style="margin-left: 2rem; height: 2.5rem; font-size: 17px; width: 10rem;" id="mdContinue2" type="submit">Add Comment</button>
+            </div>
+              <div class="moreDetailBtn" id="add_comment_btn" style="display: none;">
+              </div>
+          </form>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock content %}
+
+
+{% block script %}
+<script>
+  function displayCommentForm() {
+    var node = document.getElementById("comment_form");
+    var btn = document.getElementById("add_comment_btn")
+    if (node.style.display === "none") {
+      node.style.display = null;
+      btn.style.display = null;
+    } else {
+      node.style.display = "none";
+      btn.style.display = "none";
+    }
+  }
+
+  function displayEditCommentForm(id) {
+    var node = document.getElementById("edit_comment_text+"+id);
+    var btn = document.getElementById("edit_comment_btn+"+id)
+    if (node.style.display === "none") {
+      node.style.display = null;
+      btn.style.display = null;
+    } else {
+      node.style.display = "none";
+      btn.style.display = "none";
+    }
+  }
+
+</script>
+{% endblock script %}

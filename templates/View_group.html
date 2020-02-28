@@ -1,0 +1,115 @@
+
+{% extends "layout.html" %}
+
+{% block content %}
+<div id='root'>
+  <div class="container" style="padding-top: 1rem;">
+    <h4 class="mb-3 signupTitle" style="text-align: center;margin-top: 0rem;">Group {{ group.group_name }}</h4>
+    {% if group.photo is not sameas None %}
+    <div class="profile-img">
+      <div id="imgPreview" style="margin: 0; max-height: 10rem; max-width: 15rem; z-index: 10; position: absolute; right: 15rem;">
+        <img src="{{ url_for('display_image_group', id = group.id)}}"/>
+      </div>
+      <img src="#" id="img3" />
+    </div>
+    {% endif %}
+    <div class="row" style="position: relative;">
+      {% if current_user.id == group.group_admin_id %}
+        <div>
+          <a class="btn edit-btn-fixed" href="{{ url_for('edit_group', id=group.id) }}" style="width: 10rem; right: 2rem; top: 11rem;">Edit Group</a>
+        </div>
+      {% endif %}
+      {% if (current_user.id == group.group_admin_id) or (current_user.usertype == 3) %}
+        <div>
+          <a class="btn edit-btn-fixed delete-btn" href="{{ url_for('delete_group', id=group.id) }}" style="width: 10rem; right: 2rem; margin-top: 3rem; top: 11rem;">Delete Group</a>
+        </div>
+      {% else %}
+        {% if (current_user.usertype != 3) and (current_user.id != group.group_admin_id) %}
+          {% if is_member is sameas 0 %}
+          <div>
+            <a class="btn edit-btn-fixed delete-btn" href="{{ url_for('leave_group', id=group.id) }}" style="width: 10rem; top: 11rem; right: 2rem;">Leave Group</a>
+          </div>
+          {% else %}
+          <div>
+            <a class="btn edit-btn-fixed delete-btn" href="{{ url_for('join_group', id=group.id) }}" style="width: 10rem; top: 11rem; right: 2rem;">Join Group</a>
+          </div>
+          {% endif %}
+        {% endif %}
+      {% endif %}
+      <div class="order-md-1" style="height: auto;margin-left: 4rem; width: 45rem;">
+        <div class="mb-3">
+          <p style="display: inline-block">Group Description : </p><pre style="display: inline-block">  </pre><p style="display: inline-block">{{ group.description }}</p><br>
+          <p style="display: inline-block">Group Admin : </p><pre style="display: inline-block">       </pre><p style="display: inline-block"><a href="{{ url_for('user', username=group.group_admin.username) }}">{{ group.group_admin.username }}</a></p><br>
+          <p style="display: inline-block">Meeting Time : </p><pre style="display: inline-block">      </pre><p style="display: inline-block">{{ group.meeting_time }}</p><br>
+          <p style="display: inline-block">Location : </p><pre style="display: inline-block">          </pre><p style="display: inline-block">{{ group.location }} </p><br>
+          <p style="display: inline-block">Language : </p><pre style="display: inline-block">         </pre><p style="display: inline-block">{{ group.language }}</p><br>
+        </div>
+        <hr class="mb-4" style="width: 52rem;">
+        {% if current_user.id == group.group_admin_id %}
+        <div>
+          <a onclick="open_form()" class="btn edit-btn-fixed" href="#popup" style="width: 10rem; right: 2rem; top: 20rem;">Add members</a>
+          <div class="popup" id="popup" style="z-index: 20;">
+            <div class="popup-inner">
+              <div class="popup__text">
+                <form action="" method="post" id="popup_form">
+                  <div class="text-center mb-4" style="margin-left: 7rem;">
+                    <h1 class="h3 mb-3 font-weight-normal">Add Users</h1>
+                  </div>
+
+                  <h3 id="decrTxt" style="margin-left: 7rem;">Add users to group {{ group.group_name }}</h3>
+
+                  <!-- Make this HUGE -->
+                  <div class="col-md-6 mb-3">
+                      <input type="text" class="form-control" id="reason" placeholder="User's username" name="member" style="width: 35rem;text-align: center; margin: 1rem;">
+                  </div>
+
+                  <button class="btn btn-primary btn-lg btn-block delete-btn" id="add_user_btn" type="submit" style="margin-left: 13rem;margin-top: 5rem;width: 40%;">Add users</button>
+                </form>
+              </div>
+              <a class="popup__close" href="" onclick="close_form()">X</a>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        <table id='table' style="width: 130%;">
+          <tr class='header'>
+            <th>Member Name</th>
+          </tr>
+          {% for i in members %}
+            {% set member = members[loop.index - 1] %}
+            <tr>
+            <td style="width: 36rem;">{{ member.user.name }}</td>
+            <td>
+              <a class="fa fa-id-card vgBtn" href="{{ url_for('user', username=member.user.username) }}" style="margin-top: 0.5rem; width: 8rem;"> View Member</a>
+            </td>
+            {% if (current_user.id == group.group_admin_id) or (current_user.usertype == 3) %}
+              {% if member.user_id != group.group_admin_id %}
+                <td>
+                  <a id="remove_member" class="fa fa-window-close vgBtn" href="{{ url_for('remove_group_member', id=member.user_id) }}" style="margin-left: 1rem; margin-top: 0.5rem;"> Remove Member</a>
+                </td>
+              {% endif %}
+            {% endif %}
+            </tr>
+          {% endfor %}
+        </table>
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+{% endblock content %}
+
+{% block script %}
+<script>
+document.getElementById('popup').style.display = "none";
+
+function open_form() {
+  document.getElementById('popup').style.display = "";
+}
+
+function close_form() {
+  document.getElementById('popup').style.display = "none";
+}
+</script>
+{% endblock script %}

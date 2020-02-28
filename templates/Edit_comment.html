@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <div class="container">
+    <form action="" method="post" class="form-login">
+      <div class="text-center mb-4">
+        <h1 class="h3 mb-3 font-weight-normal">Edit Comment</h1>
+      </div>
+
+      <div class="form-label-group">
+        <input type="text" class="form-control" id="body" placeholder="{{ comment.content }}" name="body">
+      </div>
+      <button class="btn btn-primary btn-lg btn-block SignUpBtn" type="submit" style="margin-left: 8rem; width: 40%;">Edit</button>
+     
+    </form>
+  </div>
+{% endblock content %}

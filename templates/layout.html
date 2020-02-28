@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Salt Fish</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!--  BootSnipp Chatbox CSS-->
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/chatbox.css') }}">
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel='stylesheet' type='text/css' media='screen' href='../static/styles/base.css' />
+  <link rel="stylesheet" href="../static/styles/reset.min.css">
+  <link rel="stylesheet" href="../static/styles/style.css">
+  <script type="text/javascript" src="../static/js/jquery.min.js"></script>
+
+
+</head>
+<body style="min-height: 47rem;">
+
+  <nav class='navbar'>
+    <a class='navbar-brand font-weight-bolder text-uppercase text-white'>Salt Fish</a>
+    <nav class="options">
+      <a class="nav-text" href="{{ url_for('homepage') }}">Home</a>
+      <a class="nav-text" href="{{ url_for('find_tutor') }}">Find Tutor</a>
+      <a class="nav-text" href="{{ url_for('videos') }}">Teaching Video</a>
+      <a class="nav-text" href="{{ url_for('forum') }}">Forum</a>
+      <a class="nav-text" href="{{ url_for('find_groups') }}">Groups</a>
+      <a class="nav-text" href="{{ url_for('find_test') }}">Test</a>
+      {% if current_user.usertype == 3 %}
+        <a class="nav-text" href="{{ url_for('reports') }}">View All Reports</a>
+        <a class="nav-text" href="{{ url_for('verify') }}">View Verification Files</a>
+      {% endif %}
+    </nav>
+    {% block nav %} {% endblock %}
+    {% if current_user.is_authenticated %}
+    <div class="navbar_button">
+      {% if current_user.usertype != 3 %}
+      <i class="fa fa-bell notifyIcon" href="#"></i>
+      <a class="nav-text" href="{{ url_for('profile') }}" style="margin-right: 23px">@{{current_user.username}}</a>
+      <a class="btn btn-outline-primary" href="{{ url_for('profile') }}" >Profile</a>
+      {% endif %}
+      <a class="btn btn-outline-primary" href="{{ url_for('logout') }}" >Logout</a>
+    </div>
+    {% else %}
+    <div class="navbar_button">
+      <a class="btn btn-outline-primary" href="{{ url_for('register') }}">Sign up</a>
+      <a class="btn btn-outline-primary" href="{{ url_for('login') }}">Log in</a>
+    </div>
+    {% endif %}
+  </nav>
+
+{% for message in get_flashed_messages() %}
+<div class="alert alert-warning">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  {{ message }}
+</div>
+{% endfor %}
+{% block content %} {% endblock %}
+
+
+<!--  https://bootsnipp.com/snippets/1ea0N-->
+  <!--  CHATBOX  -->
+  {% if (current_user.is_authenticated) and (current_user.usertype != 3) %}
+  <div class="chat" id="area" style="z-index: 20;">
+    <div class="messaging">
+      <div class="inbox_msg">
+        <div class="inbox_people">
+          <div class="headind_srch">
+            <div class="recent_heading">
+              <h4 style="font-size: 19px;">Recent</h4>
+            </div>
+<!--            <div class="srch_bar">-->
+<!--              <div class="stylish-input-group">-->
+<!--                <input type="text" class="search-bar"  placeholder="Search" >-->
+<!--                <span class="input-group-addon">-->
+<!--                <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>-->
+<!--                </span> </div>-->
+<!--            </div>-->
+          </div>
+          <div class="inbox_chat">
+
+
+          </div>
+        </div>
+        <div class="mesgs">
+          <div class="msg_history">
+          </div>
+          <div class="type_msg">
+            <div class="input_msg_write">
+              <input type="text" class="write_msg" placeholder="Type a message" id="message"/>
+              <button class="msg_send_btn" type="button" id="sendbtn"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="on" onclick="xuanfu();"><p>+</p></div> 
+  </div>
+ 
+  {% endif %}
+  <!--  END CHATBOX -->
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script type="module" src="../js/modal.js" crossorigin="use-credentials"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+<!--  Moment.js library -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js" type="text/javascript"></script>
+  <script type=text/javascript>
+    $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+  </script>
+  {% block script %} {% endblock %}
+
+  <script type="text/javascript">
+    $('.mesgs').css('display','none');
+    $('.inbox_msg').css("display", "")
+    var senderid = {{ current_user.id }};
+    var recipientid = -1;
+    var ncontacts = 0;
+    let socket = io();
+
+    // Adds a clickable contact to the contacts sidebar
+    function addcontact(contact) {
+      var users = document.getElementsByClassName("inbox_chat")[0];
+      console.log(contact.username)
+      let chat_list = document.createElement("div");
+      chat_list.setAttribute("class", "chat_list");
+      let chat_people = document.createElement("div");
+      chat_people.setAttribute('class', 'chat_people');
+      let chat_img = document.createElement("div");
+      chat_img.setAttribute('class', 'chat_img')
+      chat_img.setAttribute('src', 'https://ptetutorials.com/images/user-profile.png');
+      chat_img.setAttribute('alt', 'ajay');
+      let chat_ib = document.createElement("div");
+      chat_ib.setAttribute("class", "chat_ib");
+      let h5 = document.createElement("h5");
+      let p = document.createElement("p");
+      p.textContent = "";
+      let close = document.createElement("a")
+      close.setAttribute('class', 'button')
+      close.textContent = "X";
+      let spn = document.createElement("SPAN");
+      spn.setAttribute('class', 'user_name');
+      spn.setAttribute('data-value', contact.id);
+      spn.textContent = contact.username;
+      h5.appendChild(spn);
+      chat_ib.appendChild(h5);
+      chat_ib.appendChild(p);
+      chat_ib.appendChild(close)
+      chat_people.appendChild(chat_img);
+      chat_people.appendChild(chat_ib);
+      chat_list.appendChild(chat_people);
+      users.appendChild(chat_list);
+
+      // Joins a chatroom with the clicked on user, with full message history
+      chat_list.addEventListener("click", function(e) {
+        console.log("Joining chatroom")
+        var $this = $(chat_list);
+        $(".chat_list").removeClass("active_chat")
+        $(this).addClass("active_chat")
+        $(".mesgs").show();
+        $(".msg_history").empty()
+        recipientid = $(this).find("span").data("value");
+        var recipientname = $(this).find("span").text()
+        socket.emit('leaveroom')
+        socket.emit('joinroom', recipientid)
+      })
+      close.addEventListener("click", function(e) {
+        e.stopPropagation()
+        chat_list.parentNode.removeChild(chat_list)
+        $(".mesgs").hide();
+        $(".msg_history").empty()
+        $('.mesgs').css('display','none');
+        $('.inbox_msg').css("display", "")
+        $.getJSON($SCRIPT_ROOT + '/remove_contact/' + contact.id)
+        ncontacts--;
+      });
+      ncontacts++;
+    }
+    // get all contacts of current user. Then creates sidebar + latest message for each
+    socket.emit('getcontacts');
+    socket.on('contacts', function(contacts) {
+      // let users = $("inbox_chat");
+      var users = document.getElementsByClassName("inbox_chat")[0];
+      for(let i = 0; i < contacts.length; i++) {
+        let contact = contacts[i];
+        addcontact(contact);
+        socket.emit('getlastmsg', contact.id, i);
+      }
+
+      // POLLING to update latest messages, disabled for now
+      var tid = setInterval(getLastMsgs, 500);
+      function getLastMsgs() {
+        for(let i = 0; i < contacts.length; i++) {
+          let contact = contacts[i];
+          socket.emit('getlastmsg', contact.id, i);
+        }
+      }
+
+      // if another user messages you and theyre not in ur contact list
+      socket.on('addcontact', function(contact) {
+        addcontact(contact);
+        console.log(contact)
+        socket.emit('getlastmsg', contact.id, ncontacts-1)
+      })
+      socket.on('lastmsg', function(json) {
+        message = json.msg
+        index = json.index
+        var prev = $(".chat_list:eq("+index+")").find("p").text();
+        // console.log(prev)
+        // console.log(json)
+        if(prev != message) {
+          // TODO notification if any last message differs from backend last message query
+          // console.log($("fa-bell"))
+          // $("fa-bell").css("color", "red")
+          // $("notifyIcon").css({'color':'red'})
+          // $("notifyIcon").css('color', 'red')
+        }
+        $(".chat_list:eq("+index+")").find("p").text(message)
+      })
+    });
+
+
+    // message history for a joined room
+    socket.on('joinedroom', function(msgs) {
+      for(let i = 0; i < msgs.length; i++) {
+        var msg = msgs[i];
+        // console.log(msg)
+        // console.log(msg.sender)
+        // console.log(senderid)
+        if(msg.sender == senderid) {
+          $( 'div.msg_history' ).append( '<div class="outgoing_msg"> <div class="sent_msg"><p>'+msg.message+'</p> <span class="time_date">'+msg.time+'</span> </div></div>');
+        } else {
+          $( 'div.msg_history' ).append('<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png"alt="sunil"> </div> <div class="received_msg"> <div class="received_withd_msg"><p>'+msg.message+'</p> <span class="time_date">'+msg.time+'</span> </div></div>');
+        }
+      }
+    })
+
+    // Send button sends a message, stores it in backend, and backend figures out whos chat to update
+    $("#sendbtn").on( 'click', function( e ) {
+      e.preventDefault()
+      let user_input = $( "#message" ).val()
+      var json={
+        senderid : senderid,
+        recipientid : recipientid,
+        message : user_input
+      }
+      // console.log(json)
+      socket.emit( 'sendmsg', json )
+      $( '#message' ).val( '' ).focus()
+    })
+    // enter button also has same effect as sendbtn clicking
+    $("#message").keyup(function(e) {
+      if(e.keyCode === 13) {
+        $("#sendbtn").click();
+      }
+    })
+    socket.on( 'msgrecieved', function( msg ) {
+      if(senderid == msg.senderid) {
+        $( 'div.msg_history' ).append( '<div class="outgoing_msg"> <div class="sent_msg"><p>'+msg.message+'</p> <span class="time_date">'+msg.time+'</span> </div></div>');
+      } else {
+        $( 'div.msg_history' ).append('<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png"alt="sunil"> </div> <div class="received_msg"> <div class="received_withd_msg"><p>'+msg.message+'</p> <span class="time_date">'+msg.time+'</span> </div></div>');
+      }
+    })
+</script>
+
+<script type="text/javascript">
+ var menubox = document.getElementById("area");
+ var cli_on = document.getElementById("on"); 
+ var flag = false, timer = null, initime = null, r_len = 0;
+ 
+ if(menubox.style.right=== 0){
+  flag = true;
+  }
+ else{
+  flag = false;
+  }
+ cli_on.onclick = function () {
+ 
+  clearTimeout(initime);
+ 
+  if (flag) {
+   r_len = 0;
+   timer = setInterval(slideright, 10);
+  } else {
+   r_len = -500;
+   timer = setInterval(slideleft, 10);
+  }
+ }
+
+ function slideright() {
+  if (r_len <= -500) {
+   clearInterval(timer);
+   flag = !flag;
+   return false;
+  }else{
+   r_len -= 5;
+   menubox.style.right = r_len + 'px';
+  }
+ }
+
+ function slideleft() {
+  if (r_len >= 0) {
+   clearInterval(timer);
+   flag = !flag;
+   return false;
+  } else {
+   r_len += 5;
+   menubox.style.right = r_len + 'px';
+  }
+ } 
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div style="width: 93%;">
+      <hr style="width: 100%; margin-left: 2rem;">
+      <div class="" style="height: auto;margin-left: 5rem;">
+        <h4 class="mb-3 signupTitle" style="text-align: center;">View appointment</h4>
+        <form action="" method="post" class="needs-validation" novalidate>
+          <div class="row">
+            <div class="">
+              <p style="display: inline-block;">Student Name</p><p class="answer">{{ appt.student.name }}</p><br>
+              <p style="display: inline-block;">Location</p><p class="answer">{{ appt.location }}</p><br>
+              <p style="display: inline-block;">Start Date</p><p class="answer">{{ appt.start_time }}</p><br>
+              <p style="display: inline-block;">Duration</p><p class="answer" >{{ appt.duration }}</p><br>
+              <p style="display: inline-block;">Approved</p><p class="answer" >{{ appt.approved}} </p><br>
+            </div>
+          </div>
+          {% if datetime.now().strftime("%Y-%m-%d %H:%M:%S") < appt.start_time.strftime("%Y-%m-%d %H:%M:%S") %}
+          {% if current_user.usertype == 2 %}
+          {% if appt.approved is sameas False %}
+          <button class="btn btn-primary btn-lg btn-block mdBtn" id="mdContinue" type="submit">Approve</button>
+          {% else %}
+          <button class="btn btn-primary btn-lg btn-block mdBtn" id="mdContinue" type="submit">Reject</button>
+          {% endif %}
+          {% endif %}
+          {% else %}
+          <br>
+          <h3>Session has past</h3>
+          <br>
+          {% if (current_user.usertype == 1) and (appt.rate is sameas 0) and (appt.approved is sameas True) %}
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <h5 style="display: inline-block;">Rate</h5>
+              <select name="rate" style="display: inline-block; margin-left: 10%;">
+                <option disabled selected value>-- select a rate --</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
+              <br><br><button class="btn btn-primary btn-lg btn-block mdBtn" id="mdContinue" type="submit" style="margin: 0;">Submit Rank</button>
+            </div>
+            {% endif %}
+            {% endif %}
+          </div>
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock content %}
+
+
+{% block script %}
+<script>
+  document.getElementById("skipBtn").addEventListener("click", (e) => {})
+</script>
+{% endblock script %}
